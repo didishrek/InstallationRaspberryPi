@@ -110,6 +110,23 @@ function install_tempered(){
     display_info "Installation de TEMPered termine"
 }
 
+function install_RaspTemp(){
+    display_info "Installation RaspTemp"
+    if [ -e /usr/bin/RaspTemp ]; then
+       display_info "RaspTemp deja installe"
+    else
+	cd /tmp && pwd
+	git clone https://github.com/didishrek/Raspberry-Tempered.git
+	test_error
+	cd Raspberry-Tempered && pwd
+	cmake .
+	test_error
+	make install
+	test_error
+    fi
+    display_info "Installation de RaspTemp termine"
+}
+
 start_time=`date +%s`
 display_title "INSTALATION RASPBERRY"
 test_sudo
@@ -117,6 +134,7 @@ update_upgrade
 install_packages
 install_hidapi
 install_tempered
+install_RaspTemp
 
 end_time=`date +%s`
 execution_time=`expr $end_time - $start_time` 
