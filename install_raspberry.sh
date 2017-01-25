@@ -22,6 +22,8 @@ PACKETTOINSTALL=(
     "libtool"
     "libudev1"
     "pkg-config"
+    "libmysqlcppconn-dev"
+    "libconfig++-dev"
 )
 
 function display_info() {
