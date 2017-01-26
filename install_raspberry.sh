@@ -127,15 +127,53 @@ function install_RaspTemp(){
     display_info "Installation de RaspTemp termine"
 }
 
-start_time=`date +%s`
-display_title "INSTALATION RASPBERRY"
-test_sudo
-update_upgrade
-install_packages
-install_hidapi
-install_tempered
-install_RaspTemp
+function install(){
+    start_time=`date +%s`
+    display_title "INSTALATION RASPBERRY"
+    test_sudo
+    update_upgrade
+    install_packages
+    install_hidapi
+    install_tempered
+    install_RaspTemp
 
-end_time=`date +%s`
-execution_time=`expr $end_time - $start_time` 
-display_info "Installation termine en $execution_time secondes"
+    end_time=`date +%s`
+    execution_time=`expr $end_time - $start_time` 
+    display_info "Installation termine en $execution_time secondes"
+}
+
+function update(){
+    start_time=`date +%s`
+    display_title "UPDATE RASPBERRY"
+    test_sudo
+    update_upgrade
+    rm -v /usr/bin/RaspTemp
+    rm -rv /usr/share/RaspTemp
+    rm -rv /tmp/Raspberry-Tempered
+    install_RaspTemp
+
+    end_time=`date +%s`
+    execution_time=`expr $end_time - $start_time` 
+    display_info "Update termine en $execution_time secondes"
+}
+
+function display_help(){
+    echo "install : installe tout ce qui est necessaire"
+    echo "update : met a jour RaspTemp"
+    echo "help : affiche ce message"
+}
+
+case "$1" in
+    "install")
+	install
+	;;
+    "update")
+	update
+	;;
+    "help")
+	display_help
+	;;
+    *)
+	display_help
+	;;
+esac
